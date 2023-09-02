@@ -1,0 +1,10 @@
+{% extends "blog_app/base.html" %}
+{% block title %}
+  blog_app toppage
+{% endblock %}
+{% block linktag %}
+  <link rel="stylesheet" href="{{ url_for('blog_app.static' ,filename='style.css') }}">
+{% endblock%}
+{% block content %}
+  {{ md_convert }}
+{% endblock %}
