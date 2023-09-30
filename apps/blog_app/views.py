@@ -19,9 +19,9 @@ blog_app = Blueprint("blog_app",__name__,url_prefix="/blog_app",template_folder=
 def index_route():
   # return render_template("blog_app/index.html")
   #現状はリダイレクトとします。
-  return redirect(url_for("blog_app.show_md_route/blogstop",blog_id="blogstop"))
+  return redirect(url_for("blog_app.show_md_route",blog_id="blogstop"))
 
-#markdown最終テスト用ルート
+#markdown用ルート
 @blog_app.route("/<blog_id>",methods=["GET"],endpoint="show_md_route")
 def show_md_route(blog_id):
   
