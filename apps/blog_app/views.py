@@ -18,49 +18,8 @@ blog_app = Blueprint("blog_app",__name__,url_prefix="/blog_app",template_folder=
 @blog_app.route("/",methods=["GET"],endpoint="index_route")
 def index_route():
   # return render_template("blog_app/index.html")
-  return redirect(url_for("blog_app.show_md_route/blogstop"))
-
-#-------------------------------
-#ローカルでのトップページ用(blog_app/rom/)
-@blog_app.route("/rom/",methods=["GET"],endpoint="index_rom_route")
-def index_rom_route():
-  # return render_template("blog_app/index.html")
-  return redirect(url_for("blog_app.show_md_rom_route",blog_id="blogstop"))
-
-#ローカルのmarkdown用ルート
-@blog_app.route("/rom/<blog_id>",methods=["GET"],endpoint="show_md_rom_route")
-def show_md_rom_route(blog_id):
-  print("blog_id=",blog_id)
-  
-  with open('./blog_app/md/'+blog_id+'.md', mode='r') as mdfile:
-    response = mdfile.read()
-  md_content = response
-  print("--/markdown--mdcontent=",md_content)
-  # mdblog-content/testmd/main.md"
-  codehilite_configs = {
-        #python-markdownのcodehilite用の設定
-        'codehilite':{
-            #mdファイル内のコードブロック```領域に当てるスタイルをpygments_styleで指定
-            'pygments_style': 'dracula',
-            #noclassesはTrueにしないと、pygments_styleがコードブロックに当たらない
-            'noclasses': True,
-            #linenums=行番号をつける
-            'linenums': True,
-            # guess_lang=コードブロックで使われている言語に合わせてスタイルを変える
-            'guess_lang': True
-            # noclasses==True && linenums==Trueなら別途cssでpreタグにline-height: 125%;が必要。
-            # ないと行番号とコードがずれる
-        }
-  }
-  #拡張機能を使用してhtmlへ変換しつつ{{md_convert}}に使われる値へ変換
-  #tab_lentgh=4は空白4つで、ネストリストや、コードブロックのインデントとする
-  #他の拡張機能はmdファイルのテーブル記法変換、番号付きリストと箇条書きリストの混在可設定、codehiliteを使うためのfencedcode、[TOC]を記載しておけば目次を作成してくれるtoc
-  mup=Markup(markdown(md_content,
-                      extensions=['attr_list','tables','sane_lists','fenced_code','codehilite','toc'],
-                      extension_configs=codehilite_configs,
-                      tab_length=2))
-  return render_template("blog_app/blank.html",md_convert=mup)
-  
+  #現状はリダイレクトとします。
+  return redirect(url_for("blog_app.show_md_route/blogstop",blog_id="blogstop"))
 
 #markdown最終テスト用ルート
 @blog_app.route("/<blog_id>",methods=["GET"],endpoint="show_md_route")
@@ -109,3 +68,44 @@ def show_md_route(blog_id):
   except Exception as e:
     #mdファイルのダウンロードに失敗した場合はエラー
     return str(e)
+
+#-------------------------------
+#ローカルでのトップページ用(blog_app/rom/)
+@blog_app.route("/rom/",methods=["GET"],endpoint="index_rom_route")
+def index_rom_route():
+  # return render_template("blog_app/index.html")
+  return redirect(url_for("blog_app.show_md_rom_route",blog_id="blogstop"))
+
+#ローカルのmarkdown用ルート
+@blog_app.route("/rom/<blog_id>",methods=["GET"],endpoint="show_md_rom_route")
+def show_md_rom_route(blog_id):
+  print("blog_id=",blog_id)
+  
+  with open('./blog_app/md/'+blog_id+'.md', mode='r') as mdfile:
+    response = mdfile.read()
+  md_content = response
+  print("--/markdown--mdcontent=",md_content)
+  # mdblog-content/testmd/main.md"
+  codehilite_configs = {
+        #python-markdownのcodehilite用の設定
+        'codehilite':{
+            #mdファイル内のコードブロック```領域に当てるスタイルをpygments_styleで指定
+            'pygments_style': 'dracula',
+            #noclassesはTrueにしないと、pygments_styleがコードブロックに当たらない
+            'noclasses': True,
+            #linenums=行番号をつける
+            'linenums': True,
+            # guess_lang=コードブロックで使われている言語に合わせてスタイルを変える
+            'guess_lang': True
+            # noclasses==True && linenums==Trueなら別途cssでpreタグにline-height: 125%;が必要。
+            # ないと行番号とコードがずれる
+        }
+  }
+  #拡張機能を使用してhtmlへ変換しつつ{{md_convert}}に使われる値へ変換
+  #tab_lentgh=4は空白4つで、ネストリストや、コードブロックのインデントとする
+  #他の拡張機能はmdファイルのテーブル記法変換、番号付きリストと箇条書きリストの混在可設定、codehiliteを使うためのfencedcode、[TOC]を記載しておけば目次を作成してくれるtoc
+  mup=Markup(markdown(md_content,
+                      extensions=['attr_list','tables','sane_lists','fenced_code','codehilite','toc'],
+                      extension_configs=codehilite_configs,
+                      tab_length=2))
+  return render_template("blog_app/blank.html",md_convert=mup)
