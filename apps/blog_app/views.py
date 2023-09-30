@@ -4,7 +4,7 @@ import base64
 # import markdown2
 from markdown import markdown
 #flaskからはMarkupを追加インポートします。
-from flask import Flask,Blueprint,render_template,redirect,jsonify,request,Markup,current_app,render_template_string
+from flask import Flask,Blueprint,render_template,redirect,jsonify,request,Markup,current_app,render_template_string,url_for
 import os
 import boto3
 
@@ -15,18 +15,21 @@ blog_app = Blueprint("blog_app",__name__,url_prefix="/blog_app",template_folder=
 
 
 #トップページ用ルート
-@blog_app.route("/",methods=["GET"],endpoint="testroute")
-def testroute():
-  return render_template("blog_app/index.html")
-#個々の記事表示用ルート
-# @blog_app.route("/<blog_id>",methods=["GET"],endpoint="testroute_show")
-# def testroute_show(blog_id):
-#   return render_template("blog_app/testblog"+blog_id+".html")
+@blog_app.route("/",methods=["GET"],endpoint="index_route")
+def index_route():
+  # return render_template("blog_app/index.html")
+  return redirect(url_for("blog_app.show_md_route/blogstop"))
 
 #-------------------------------
+#ローカルでのトップページ用(blog_app/rom/)
+@blog_app.route("/rom/",methods=["GET"],endpoint="index_rom_route")
+def index_rom_route():
+  # return render_template("blog_app/index.html")
+  return redirect(url_for("blog_app.show_md_rom_route",blog_id="blogstop"))
+
 #ローカルのmarkdown用ルート
-@blog_app.route("/rom/<blog_id>",methods=["GET"],endpoint="testroute_markdown")
-def testroute_markdown(blog_id):
+@blog_app.route("/rom/<blog_id>",methods=["GET"],endpoint="show_md_rom_route")
+def show_md_rom_route(blog_id):
   print("blog_id=",blog_id)
   
   with open('./blog_app/md/'+blog_id+'.md', mode='r') as mdfile:
@@ -60,8 +63,8 @@ def testroute_markdown(blog_id):
   
 
 #markdown最終テスト用ルート
-@blog_app.route("/<blog_id>",methods=["GET"],endpoint="show_md")
-def show_md(blog_id):
+@blog_app.route("/<blog_id>",methods=["GET"],endpoint="show_md_route")
+def show_md_route(blog_id):
   
   print("blog_id=",blog_id)
   
@@ -106,61 +109,3 @@ def show_md(blog_id):
   except Exception as e:
     #mdファイルのダウンロードに失敗した場合はエラー
     return str(e)
-#--------------------------------------------------  
-# def read_md():
-#   with open('./blog_app/md/main.md', mode='r') as mdfile:
-#     mdcontent = mdfile.read()
-#   return Markup(markdown(mdcontent))  
-
-# #-------------------------------
-# #markdownと画像用ルート
-# @blog_app.route("/markdown2",methods=["GET"],endpoint="testroute_markdown2")
-# def testroute_markdown2():
-#   # ブループリントのテンプレートディレクトリへのパスを取得
-#   templatedir_path = os.path.join(os.path.dirname(__file__), 'templates/blog_app')
-#   # テンプレートファイルの内容を文字列として読み込む
-#   with open(templatedir_path+"/base.html", 'r') as template_file:
-#       base_html_content = template_file.read()
-  
-#   # S3クライアントの初期化(前と一緒)
-#   s3_client = boto3.client('s3',
-#       aws_access_key_id=current_app.config['S3_ACCESS_KEY'],
-#       aws_secret_access_key=current_app.config['S3_SECRET_KEY'],
-#       region_name=current_app.config['S3_REGION']
-#       )
-#   try:
-    
-#     # S3からmdファイルをダウンロード(前と一緒)
-#     response = s3_client.get_object(Bucket=current_app.config['S3_BUCKET_NAME'], Key="mdblog-content/testmd/main2.md")
-#     md_content = response['Body'].read().decode('utf-8')
-    
-#     # mdファイルはそのままhtml化します
-#     # render_templateを使わないので、{{}}に収まるようにレンダリングする必要がない=Markupはなくてもいい
-#     markdowned=markdown(md_content,extensions=['tables'])
-#     # mdファイル中のマスタッシュ部分をレンダリングします。
-#     markdowned_rendered=render_template_string(markdowned)
-#     # マスタッシュ部分もレンダリングした結果を render_templateの第2引数で使えるようにします
-#     mup=Markup(markdowned_rendered)
-#     return render_template("blog_app/blank.html",md_convert=mup)
-#   except Exception as e:
-#     return str(e)
-
-
-# #get_img_froms3メソッドは、テンプレートから呼び出し可能なメソッドとして定義
-# @blog_app.add_app_template_global
-# def get_img_froms3(dir_name,file_name):
-#   #S3クライアントの初期化
-#   s3_client = boto3.client('s3',
-#       aws_access_key_id=current_app.config['S3_ACCESS_KEY'],
-#       aws_secret_access_key=current_app.config['S3_SECRET_KEY'],
-#       region_name=current_app.config['S3_REGION']
-#       )
-#   try:
-#     # S3から画像ファイルをダウンロード
-#     response = s3_client.get_object(Bucket=current_app.config['S3_BUCKET_NAME'], Key="mdblog-content/testmd/"+dir_name+"/"+file_name)
-#     # ダウンロードした結果から画像部分のみを取り出す
-#     image_data = response["Body"].read()
-#     # 画像をbase64でエンコードした結果を返す
-#     return base64.b64encode(image_data).decode('utf-8')
-#   except Exception as e:
-#     return str(e)
