@@ -1,0 +1,48 @@
+/*--- Laptop Styling ---*/
+@media screen and (min-width: 64em) {
+  h1, h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+  }
+  /* Header */
+  .header-logo-title {
+    display: block;
+    margin-left: 1px;
+    font-size: 1.2rem;
+  }
+  .md-content {
+    padding: 80px 10px 120px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px 0px;
+  }
+  .footer-info-nav-img {
+    width: 0px;
+  }
+  .footer-form{
+    margin: 0 auto;
+    width:40%;
+  }
+  .footer-info{
+    margin: 0 auto;
+    width:60%;
+  }
+  .footer-form form{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .footer-form-input {
+    width: 49%;
+  }
+  .footer-form-textarea {
+    width: 100%;
+  }
+  /* .footer-form-input + .footer-form-input {
+    margin-left:2%;
+  } */
+}

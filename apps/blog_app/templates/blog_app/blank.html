@@ -3,8 +3,16 @@
   blog_app toppage
 {% endblock %}
 {% block linktag %}
-  <link rel="stylesheet" href="{{ url_for('blog_app.static' ,filename='style.css') }}">
+  {# 上からノーマライズ、fontawesome、スタイル、各端末用レイアウト Googlefonts#}
+  <link rel="stylesheet" href="{{ url_for('blog_app.static' ,filename='css/normalize.css') }}">  
+  <link rel="stylesheet" href="{{ url_for('blog_app.static' ,filename='css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('blog_app.static' ,filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('blog_app.static', filename='css/style-mobile.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('blog_app.static', filename='css/style-laptop.css') }}"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 {% endblock%}
 {% block content %}
-  {{ md_convert }}
+  <div class="md-content">{{ md_convert }}</div>
 {% endblock %}

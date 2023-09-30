@@ -1,0 +1,131 @@
+/* apps/blog_app/static/style.css */
+
+.header{
+  color: #FFF7F7;
+  /* font-family: "Piazzolla", "Times New Roman", "YuMincho", "Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif; */
+  font-weight:700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #222222;
+  border: 5px solid#6633bb;
+  position: fixed;
+  z-index: 2;
+}
+.header-logo{
+  display: flex;
+  align-items: center;
+}
+.header-nav-menu{
+  display: flex;
+  list-style-type: none;
+  padding-right:50px;
+}
+.header-nav-menu-item > a{
+  color: #FFF7F7;
+  text-decoration:none;
+}
+.header-nav-menu-item > a:hover,
+.header-nav-menu-item > a:focus {
+  color: #999900;
+}
+
+.footer-info-nav-menu > ul > li,
+.socilal-links >li{
+  list-style-type: none;
+}
+.footer-info-nav-menu > ul,
+.socilal-links{
+  padding-left: 0;
+}
+
+.footer-info-nav-menu >ul >li >a,
+.socilal-links > li >a{
+  color: #FFF7F7;
+  text-decoration:none;
+}
+.footer-info-nav-menu >ul >li >a:hover,
+.footer-info-nav-menu >ul >li >a:focus,
+.socilal-links > li >a:hover,
+.socilal-links > li >a:focus{
+  color: #999900;
+}
+.footer-container{
+  border:5px solid#6633bb;
+}
+
+body{
+  background-color: #222222;
+  color: white;
+  font-family: 
+    "Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;
+  /* white-space: pre-wrap; 
+  overflow-x: auto; */
+}
+
+a{
+  text-decoration:none;
+}
+
+table{
+  /* テーブル内の枠線を1本線にする */
+  border-collapse: collapse;
+  
+}
+table,th,td{
+  border: 1px solid #999999;
+}
+h1{
+  color : #00aa00;
+}
+
+code {
+  color : #999900
+}
+
+/* pre {
+  border : 1px solid white;
+
+} */
+
+pre > code {
+  color : white;
+}
+
+h1,h2,h3,h4,h5{
+  /* border-bottom:2px solid #555555; */
+  border:3px solid #555555;
+}
+
+a {
+  color : #6666ff
+}
+
+/*-----------------*/
+
+
+pre {
+  line-height: 125%; 
+}
+td.linenos,
+td.code{
+  border :1px solid white;
+}
+div.codehilite{
+  width: fit-content;
+  font-size: 0.8em;
+  
+}
+code{
+  font-family: 'Source Code Pro';
+}
+blockquote{
+  border :1px dashed white ;
+}
+/*-----------*/
