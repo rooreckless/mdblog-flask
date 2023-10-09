@@ -22,7 +22,7 @@ def index_route():
   return redirect(url_for("ipynb_app.show_ipynb_route",ipynb_id="ipynbstop"))
 
 #ipynb用ルート
-@ipynb_app.route("/<pynb_id>",methods=["GET"],endpoint="show_md_route")
+@ipynb_app.route("/<ipynb_id>",methods=["GET"],endpoint="show_md_route")
 def show_ipynb_route(ipynb_id):
   
   # S3クライアントの初期化
